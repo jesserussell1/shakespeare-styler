@@ -50,7 +50,8 @@ else:
                     # Make OpenAI API request
                     response = client.chat.completions.create(
                         model="gpt-4",  # Specify the model to use
-                        messages=messages  # Pass the list of messages
+                        messages=messages,  # Pass the list of messages
+                        temperature=0.2,  # Adjust temperature for creativity
                     )
 
                     # Extract the styled text from the response using the correct attributes
