@@ -49,20 +49,24 @@ else:
 
                     if style_mode == "Shakespeare":
                         temperature = 0.2
-                        frequency_penalty = 0.1  # light penalty, allow some repeated Shakespearean phrases
+                        frequency_penalty = 0.1 # light penalty, allow some repeated Shakespearean phrases
+                        presence_penalty = 0.1
                     elif style_mode == "Lewis Carroll":
                         temperature = 0.5
                         frequency_penalty = 0.4  # stronger penalty, encourage playful, varied language
+                        presence_penalty = 0.5
                     else:
                         temperature = 0.3
                         frequency_penalty = 0.0
+                        presence_penalty = 0.0
 
                     # Make OpenAI API request
                     response = client.chat.completions.create(
                         model="gpt-4",  # Specify the model to use
                         messages=messages,  # Pass the list of messages
-                        temperature=0.2,  # Adjust temperature for creativity
+                        temperature=temperature,  # Adjust temperature for creativity
                         frequency_penalty=frequency_penalty,  # Adjust frequency penalty
+                        presence_penalty=presence_penalty,  # Adjust presence penalty
                     )
 
                     # Extract the styled text from the response using the correct attributes
