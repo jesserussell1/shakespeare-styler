@@ -47,11 +47,22 @@ else:
                     # Create the message structure as required by OpenAI API
                     messages = [{"role": "user", "content": prompt}]
 
+                    if style_mode == "Shakespeare":
+                        temperature = 0.2
+                        frequency_penalty = 0.1  # light penalty, allow some repeated Shakespearean phrases
+                    elif style_mode == "Lewis Carroll":
+                        temperature = 0.5
+                        frequency_penalty = 0.4  # stronger penalty, encourage playful, varied language
+                    else:
+                        temperature = 0.3
+                        frequency_penalty = 0.0
+
                     # Make OpenAI API request
                     response = client.chat.completions.create(
                         model="gpt-4",  # Specify the model to use
                         messages=messages,  # Pass the list of messages
                         temperature=0.2,  # Adjust temperature for creativity
+                        frequency_penalty=frequency_penalty,  # Adjust frequency penalty
                     )
 
                     # Extract the styled text from the response using the correct attributes
