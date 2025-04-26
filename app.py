@@ -3,8 +3,8 @@ import openai
 from openai import OpenAI
 from prompts import basic_prompt, few_shot_shakespeare_prompt, lewis_carrol_prompt, few_shot_lewis_carrol_prompt
 
-# Get your API key from Streamlit secrets or wherever you store it
-api_key = st.secrets["openai"].get("api_key", None)
+# Get your API key from Streamlit secrets
+api_key = st.secrets["openai"]["api_key"]
 
 if not api_key:
     st.error("API key not found. Please check your Streamlit secrets.")
