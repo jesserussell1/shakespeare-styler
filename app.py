@@ -1,7 +1,7 @@
 import streamlit as st
 import openai
 from openai import OpenAI
-from prompts import basic_prompt, few_shot_shakespeare_prompt, lewis_carrol_prompt, few_shot_lewis_carrol_prompt
+from prompts import shakespeare_prompt, few_shot_shakespeare_prompt, lewis_carrol_prompt, few_shot_lewis_carrol_prompt
 
 # Get your API key from Streamlit secrets
 api_key = st.secrets["openai"]["api_key"]
@@ -15,14 +15,19 @@ else:
     # Initialize the OpenAI client
     client = OpenAI(api_key=api_key)
 
+    # Streamlit UI
     st.title("📝 Style Transformer")
 
+    # User input
     user_input = st.text_input("Enter a modern English sentence:")
 
+    # Style mode selection
     style_mode = st.selectbox("Choose style mode:", ["Shakespeare", "Lewis Carroll"])
 
+    # Prompt type selection
     prompt_type = st.selectbox("Choose prompt type:", ["Regular", "Few-Shot"])
 
+    # Translate button
     if st.button("Translate!"):
         if user_input.strip() == "":
             st.error("Please enter a sentence to translate.")
@@ -31,7 +36,7 @@ else:
                 # Prepare the prompt based on the selected style mode and prompt type
                 if style_mode == "Shakespeare":
                     if prompt_type == "Regular":
-                        prompt = basic_prompt(user_input)  # Regular Shakespeare style
+                        prompt = shakespeare_prompt(user_input)  # Regular Shakespeare style
                     else:
                         prompt = few_shot_shakespeare_prompt(user_input)  # Few-shot Shakespeare style
                 elif style_mode == "Lewis Carroll":
@@ -48,13 +53,13 @@ else:
                     messages = [{"role": "user", "content": prompt}]
 
                     if style_mode == "Shakespeare":
-                        temperature = 0.2
+                        temperature = 0.2 # light creativity
                         frequency_penalty = 0.1 # light penalty, allow some repeated Shakespearean phrases
-                        presence_penalty = 0.1
+                        presence_penalty = 0.1 # light penalty, allow some repeated Shakespearean phrases
                     elif style_mode == "Lewis Carroll":
-                        temperature = 0.5
+                        temperature = 0.5 # stronger creativity
                         frequency_penalty = 0.4  # stronger penalty, encourage playful, varied language
-                        presence_penalty = 0.5
+                        presence_penalty = 0.5 # stronger penalty, encourage playful, varied language
                     else:
                         temperature = 0.3
                         frequency_penalty = 0.0

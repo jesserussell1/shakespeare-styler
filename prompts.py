@@ -1,6 +1,6 @@
 # prompts.py
 
-def basic_prompt(user_input):
+def shakespeare_prompt(user_input):
     return f"Translate this sentence into Shakespearean English: {user_input}"
 
 def few_shot_shakespeare_prompt(user_input):
